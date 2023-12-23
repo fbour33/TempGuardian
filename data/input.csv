@@ -1,0 +1,61 @@
+username,address,minTemp(°C),maxTemp(°C),minWind(km/h),maxWind(km/h),minRainfall(mm/h),maxRainfall(mm/h)
+StellarJourney92,"61 Chemin Challet 59800 Lille",-2,8,5,20,2.5,8.5
+QuantumExplorer,"65 rue Charles Corbeau 45400 Fleury-les-aubrais",5,15,10,25,1,6
+ElectricPulse19,"61 rue Saint Germain 92230 Gennevilliers",10,20,2,15,0.5,
+MidnightWhisperer,"68 rue de l'Epeule 59100 Roubaix",-1,9,,,3,10
+LunaHarmony,"65 rue Bonneterie 12100 Millau",8,18,15,35,1.5,7.5
+CosmicCipher,"4 cours Franklin Roosevelt 13008 Marseille",2,12,3,18,0.8,5.5
+VelocityDreamer,"67 rue Sébastopol 42000 Saint-Étienne",3,13,12,22,2,9
+NebulaNomad,"39 rue des Lacs 78800 Houilles",6,,7,25,1.2,6.5
+MysticVortex77,"60 boulevard de Prague 30000 Nîmes",-5,5,4,20,0.3,
+TechnoSculptor,"76 Chemin Des Bateliers 49000 Angers",12,22,6,15,2.8,11
+AuroraSpecter,"27 Chemin Des Bateliers 16000 Angoulême",-3,7,8,32,0.7,4.5
+QuantumPixel,"72 rue du Château 97480 Saint-joseph",7,17,,28,2.2,8.8
+BinaryBlaze,"59 rue Michel Ange 97232 Le Lamentin",0,10,5,15,0.9,5.2
+SereneCipher,"10 rue Pierre Motte 88100 Saint-dié",9,19,11,26,1.4,7
+ZenithVoyager,"56 Avenue des Tuileries 91350 Grigny",4,14,3,12,3.5,12.5
+EchoEnigma,"82 avenue Ferdinand de Lesseps 38000 Grenoble",-4,6,7,22,1.8,8
+RadiantOracle,"54 avenue Jules Ferry 83140 Six-fours-les-plages",11,21,6,20,0.6,4.2
+NovaNavigator,"41 Quai des Belges 13500 Martigues",,,9,30,2.4,10.5
+CelestialPulse,"20 rue Jean-Monnet 95500 Gonesse",-6,4,4,18,1.1,6.8
+LunarLabyrinth,"55 rue Grande Fusterie 19100 Brive-la-gaillarde",13,23,12,28,0.2,3
+StellarJourney92,"49 rue Reine Elisabeth 06500 Menton",-7,3,5,25,3.2,11.5
+QuantumExplorer,"9 rue Gouin de Beauchesne 91240 Saint-michel-sur-orge",14,24,,32,1.6,7.8
+ElectricPulse19,"49 rue du Président Roosevelt 49400 Saumur",-8,2,6,15,0.4,3.8
+MidnightWhisperer,"45 quai Saint-Nicolas 37000 Tours",15,25,9,30,2.7,9.5
+LunaHarmony,"33 Quai des Belges 13016 Marseille",-9,1,7,25,1.3,6.2
+CosmicCipher,"16 Chemin Des Bateliers 49000 Angers",16,26,13,35,0.1,2.5
+VelocityDreamer,"7 rue de la Hulotais 02100 Saint-quentin",-10,0,8,22,3.8,13
+NebulaNomad,"77 Chemin Du Lavarin Sud 46000 Cahors",17,27,10,30,1.7,8.5
+MysticVortex77,"62 rue Descartes 92150 Suresnes",-11,-1,4,18,0.8,4.8
+TechnoSculptor,"91 rue Goya 72000 Le Mans",18,28,9,25,,10.2
+AuroraSpecter,"45 Avenue des Pr'es 95160 Montmorency",-12,-2,15,40,1.5,7.2
+QuantumPixel,"8 rue Marie de Médicis 95870 Bezons",19,,6,20,0.5,3.2
+BinaryBlaze,"90 place Stanislas 54100 Nancy",-13,-3,11,32,3.5,12
+SereneCipher,"72 Place Charles de Gaulle 59650 Villeneuve-d'ascq",20,30,5,15,1.2,6
+ZenithVoyager,"14 rue des Chaligny 06000 Nice",-14,-4,,28,0.7,4
+EchoEnigma,"15 Rue de Verdun 40000 Mont-de-marsan",21,31,8,22,2.2,9.5
+RadiantOracle,"17 Place Napoléon 53000 Laval",-15,-5,7,25,0.9,
+NovaNavigator,"37 rue Lenotre 35000 Rennes",22,32,10,30,1.4,7.8
+CelestialPulse,"43 rue Isambard 95130 Franconville-la-garenne",-16,-6,3,15,3,11.2
+LunarLabyrinth,"79 rue du Général Ailleret 93260 Les Lilas",23,33,14,35,1.8,8.2
+StellarJourney92,"85 rue de Penthièvre 95000 Pontoise",-17,-7,9,28,0.6,4.5
+QuantumExplorer,"37 Avenue des Pr'es 34000 Montpellier",24,34,6,20,2.4,10
+ElectricPulse19,"94 Chemin Du Lavarin Sud 94230 Cachan",-18,-8,11,30,1.1,6.5
+MidnightWhisperer,"33 avenue Ferdinand de Lesseps 38000 Grenoble",25,35,8,22,0.3,3
+LunaHarmony,"41 rue de la Mare aux Carats 93100 Montreuil",-19,-9,7,,3.2,11.8
+CosmicCipher,"23 rue Cazade 59140 Dunkerque",26,36,12,32,1.6,7.5
+VelocityDreamer,"40 rue Pierre De Coubertin 31400 Toulouse",-20,-10,5,15,0.4,3.5
+NebulaNomad,"76 rue Marguerite 94350 Villiers-sur-marne",27,37,10,28,,
+MysticVortex77,"60 rue Sébastopol 42000 Saint-Étienne",-21,-11,4,18,1.3,6.8
+TechnoSculptor,"26 rue Grande Fusterie 91220 Brétigny-sur-orge",28,,8,22,0.2,2.8
+AuroraSpecter,"71 Place de la Gare 77380 Combs-la-ville",-22,-12,15,35,3.8,13.5
+QuantumPixel,"39 rue Gontier-Patin 80100 Abbeville",29,39,6,20,1.7,8
+BinaryBlaze,"1 rue de l'Epeule 59100 Roubaix",-23,-13,11,28,0.8,4.2
+SereneCipher,"78 Faubourg Saint Honoré 75019 Paris",30,40,7,25,2,
+ZenithVoyager,"68 rue Pierre Motte 88100 Saint-dié",-24,-14,13,35,1.5,7
+EchoEnigma,"10 Rue Roussy 84100 Orange",31,41,9,30,0.1,2.2
+RadiantOracle,"26 avenue Jean Portalis 10000 Troyes",-25,-15,5,15,3.5,12.2
+NovaNavigator,"8 rue de Groussay 93230 Romainville",32,42,,28,1.2,6.2
+CelestialPulse,"70 avenue de Provence 56000 Vannes",-26,-16,4,18,0.7,3.8
+LunarLabyrinth,"97 rue Pierre De Coubertin 31200 Toulouse",33,43,8,22,2.2,9.8

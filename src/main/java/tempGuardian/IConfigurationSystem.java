@@ -1,11 +1,11 @@
 package tempGuardian;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface IConfigurationSystem {
 
-    public void setUpUsers();
-    public ArrayList<IUser> getAllUsers();
-    public IUser getUser(IUser user);
+    public HashMap<String, ArrayList<IAddress>> getAllUsers();
+    public ArrayList<IAddress> getUserAddresses(IUser user);
 
 }
