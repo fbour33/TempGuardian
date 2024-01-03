@@ -5,4 +5,8 @@ package tempGuardian;
  **/
 
 public interface IWeatherData {
+
+    public double getTemperature();
+    public double getRain();
+    public double getWind();
 }
