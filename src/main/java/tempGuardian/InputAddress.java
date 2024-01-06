@@ -32,28 +32,22 @@ public class InputAddress {
         return address;
     }
 
-    public Double getMinTemp() {
-        return minTemp;
-    }
-
-    public Double getMaxTemp() {
-        return maxTemp;
-    }
-
-    public Double getMinWind() {
-        return minWind;
-    }
-
-    public Double getMaxWind() {
-        return maxWind;
-    }
-
-    public Double getMinRainfall() {
-        return minRainfall;
-    }
-
-    public Double getMaxRainfall() {
-        return maxRainfall;
+    // this method cant return a null value
+    public double getValue(WeatherDataName dataName, boolean isMin) {
+        Double value = null;
+        double defaultValue = (isMin) ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+        switch (dataName){
+            case TEMP:
+                value = (isMin) ? minTemp : maxTemp;
+                break;
+            case WIND:
+                value = (isMin) ? minWind : maxWind;
+                break;
+            case RAIN:
+                value = (isMin) ? minRainfall : maxRainfall;
+                break;
+        }
+        return (value != null) ? value : defaultValue;
     }
 
     @Override

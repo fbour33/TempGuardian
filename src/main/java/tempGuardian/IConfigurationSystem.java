@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public interface IConfigurationSystem {
 
-    public HashMap<String, ArrayList<IAddress>> getAllUsers();
-    public ArrayList<IAddress> getUserAddresses(IUser user);
+    ArrayList<IUser> getAllUsers();
+    ArrayList<IAddress> getUserAddresses(IUser user);
 
 }

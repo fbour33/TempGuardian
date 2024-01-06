@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public interface IUser {
 
-    public String getName();
-    public void disableNotification();
-    public void disableNotifications(IAddress... addresses);
-    public boolean areNotificationsDisabled();
-    public boolean areNotificationsDisabled(IAddress address);
-    public ArrayList<IAddress> getAddresses();
-
-
-
+    String getName();
+    void disableNotifications();
+    void disableNotifications(IAddress... addresses);
+    boolean areNotificationsDisabled();
+    boolean areNotificationsDisabled(IAddress address);
+    ArrayList<IAddress> getAddresses();
+    void addAddress(IAddress address);
 }

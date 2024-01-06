@@ -1,12 +1,12 @@
 package tempGuardian;
 
 /**
- * Données météorologiques réccupérées de l'API
+ * Données météorologiques récupérées de l'API
  **/
 
 public interface IWeatherData {
 
-    public double getTemperature();
-    public double getRain();
-    public double getWind();
+    double getTemperature();
+    double getRain();
+    double getWind();
 }

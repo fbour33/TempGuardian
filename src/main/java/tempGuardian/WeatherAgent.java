@@ -3,14 +3,13 @@ package tempGuardian;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class WeatherAgent implements IWeatherAgent {
 
-    private OkHttpClient client;
+    private final OkHttpClient client;
 
     public WeatherAgent(){
         this.client = new OkHttpClient();

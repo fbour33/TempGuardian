@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class PositionAgent implements IPositionAgent{
 
-    private OkHttpClient client;
+    private final OkHttpClient client;
     private final String POSITION_URL = "https://geocode.maps.co/search?q=";
 
     public PositionAgent(){

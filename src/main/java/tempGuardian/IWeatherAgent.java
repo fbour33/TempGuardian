@@ -2,6 +2,6 @@ package tempGuardian;
 
 public interface IWeatherAgent {
 
-    public IWeatherData getWeatherData(Position position);
+    IWeatherData getWeatherData(Position position);
 
 }

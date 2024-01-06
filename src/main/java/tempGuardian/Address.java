@@ -3,18 +3,17 @@ package tempGuardian;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Address implements IAddress{
+public class Address implements IAddress {
 
     private String location;
     private ArrayList<IWeatherThreshold> thresholds;
 
-    // Each Threshold is created in the InputAddress
-    // in order to have the dataName and the right threshold's number
-    // (Sometimes there is 2 thresholds ou 3 thresholds ...)
     public Address(String location, IWeatherThreshold... weatherThresholds){
         setLocation(location);
-        if(weatherThresholds != null)
+        if(weatherThresholds != null){
+            thresholds = new ArrayList<>();
             thresholds.addAll(Arrays.asList(weatherThresholds));
+        }
     }
 
     public void setLocation(String location) {
@@ -28,5 +27,23 @@ public class Address implements IAddress{
     @Override
     public ArrayList<IWeatherThreshold> getThresholds() {
         return thresholds;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Address address = (Address) obj;
+        return this.location.equals(address.location);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "location='" + location + '\'' +
+                ", thresholds=" + thresholds +
+                '}';
     }
 }
