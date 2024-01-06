@@ -8,7 +8,6 @@ import java.util.*;
 
 public class ConfigurationSystem implements IConfigurationSystem {
 
-    HashMap<String, ArrayList<IAddress>> userList = new HashMap<>();
     HashMap<String, IUser> userSet = new HashMap<>();
 
     public ConfigurationSystem(String filePath) {
@@ -17,22 +16,24 @@ public class ConfigurationSystem implements IConfigurationSystem {
                     .withType(InputAddress.class)
                     .build().parse();
             beans.forEach(this::addAddress);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void addAddress(InputAddress inputAddress){
+    private void addAddress(InputAddress inputAddress) {
         IUser user = userSet.get(inputAddress.getUsername());
-        IAddress newAddress = new Address(
-                inputAddress.getAddress(),
-                new WeatherThreshold(WeatherDataName.TEMP, inputAddress.getValue(WeatherDataName.TEMP, true), inputAddress.getValue(WeatherDataName.TEMP, false)),
-                new WeatherThreshold(WeatherDataName.WIND, inputAddress.getValue(WeatherDataName.WIND, true), inputAddress.getValue(WeatherDataName.WIND, false)),
-                new WeatherThreshold(WeatherDataName.RAIN, inputAddress.getValue(WeatherDataName.RAIN, true), inputAddress.getValue(WeatherDataName.RAIN, false))
-        );
-        if (user != null){
+        ArrayList<IWeatherThreshold> thresholdList = new ArrayList<>();
+        if (inputAddress.isTempDefined())
+            thresholdList.add(new TempThreshold(inputAddress.getMinTemp(), inputAddress.getMaxTemp()));
+        if (inputAddress.isWindDefined())
+            thresholdList.add(new WindThreshold(inputAddress.getMinWind(), inputAddress.getMaxWind()));
+        if (inputAddress.isRainFallDefined())
+            thresholdList.add(new RainThreshold(inputAddress.getMinRainfall(), inputAddress.getMaxRainfall()));
+        IAddress newAddress = new Address(inputAddress.getAddress(), thresholdList.toArray(new IWeatherThreshold[0]));
+        if (user != null) {
             user.addAddress(newAddress);
-        }else{
+        } else {
             IUser newUser = new User(inputAddress.getUsername());
             newUser.addAddress(newAddress);
             userSet.put(inputAddress.getUsername(), newUser);
@@ -47,17 +48,44 @@ public class ConfigurationSystem implements IConfigurationSystem {
 
     @Override
     public ArrayList<IAddress> getUserAddresses(IUser user) {
-        return userList.get(user.getName());
+        return userSet.get(user.getName()).getAddresses();
     }
 
-// Use to test code
-/*    public static void main(String[] args) {
+    @Override
+    public void executeSystem(IPositionAgent positionAgent, IWeatherAgent weatherAgent, String outputPath) throws InterruptedException {
+        INotificationSystem notificationSystem = new NotificationSystem(outputPath);
+        for (IUser user : getAllUsers()) {
+            for (IAddress address : getUserAddresses(user)) {
+                for (IWeatherThreshold threshold : address.getThresholds()) {
+                    Position position = positionAgent.getPositionFromAddress(address);
+                    IWeatherData weatherData = weatherAgent.getWeatherData(position);
+                    if (threshold.isThresholdExceeded(weatherData)) {
+                        notificationSystem.sendAlert(
+                                user.getName(),
+                                threshold.generateThresholdMessage(weatherData),
+                                address.getLocation(),
+                                threshold.generateThresholdDataMessage(weatherData)
+                        );
+                    }
+                    Thread.sleep(1000);
+                }
+            }
+        }
+    }
+
+
+    // Use to test code
+    public static void main(String[] args) throws InterruptedException {
         IConfigurationSystem configurationSystem = new ConfigurationSystem("data/input.csv");
         ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
         int count = 1;
-        for (IUser user: userArrayList){
+        for (IUser user : userArrayList) {
             System.out.println("[" + count + "]" + user);
             count++;
         }
-    }*/
+
+        IPositionAgent positionAgent = new PositionAgent();
+        IWeatherAgent weatherAgent = new WeatherAgent();
+        configurationSystem.executeSystem(positionAgent, weatherAgent, "data/test_main.csv");
+    }
 }

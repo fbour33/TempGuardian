@@ -23,7 +23,7 @@ public class NotificationSystem implements INotificationSystem {
         String[] writeData = {username, address, message, data};
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath, true))){
-            System.out.println("write:" + Arrays.toString(writeData) + "to" + writer);
+            System.out.println("Alert: " + Arrays.toString(writeData));
             writer.writeNext(writeData);
         } catch (IOException e) {
             System.out.println(e.getMessage());

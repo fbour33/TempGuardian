@@ -6,8 +6,9 @@ package tempGuardian;
 
 public interface IWeatherThreshold {
 
-    WeatherDataName getWeatherDataName();
     double getMaxThreshold();
     double getMinThreshold();
     boolean isThresholdExceeded(IWeatherData weatherData);
+    String generateThresholdMessage(IWeatherData weatherData);
+    String generateThresholdDataMessage(IWeatherData weatherData);
 }

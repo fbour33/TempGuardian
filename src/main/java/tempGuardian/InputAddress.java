@@ -32,22 +32,43 @@ public class InputAddress {
         return address;
     }
 
-    // this method cant return a null value
-    public double getValue(WeatherDataName dataName, boolean isMin) {
-        Double value = null;
-        double defaultValue = (isMin) ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
-        switch (dataName){
-            case TEMP:
-                value = (isMin) ? minTemp : maxTemp;
-                break;
-            case WIND:
-                value = (isMin) ? minWind : maxWind;
-                break;
-            case RAIN:
-                value = (isMin) ? minRainfall : maxRainfall;
-                break;
-        }
-        return (value != null) ? value : defaultValue;
+    public double getMinTemp() {
+        if (minTemp == null) return Double.NEGATIVE_INFINITY;
+        return minTemp;
+    }
+
+    public double getMaxTemp() {
+        if (maxTemp == null) return Double.POSITIVE_INFINITY;
+        return maxTemp;
+    }
+
+    public boolean isTempDefined() {
+        return minTemp != null || maxTemp != null;
+    }
+
+    public double getMinWind() {
+        if (minWind == null) return Double.NEGATIVE_INFINITY;
+        return minWind;
+    }
+    public double getMaxWind() {
+        if (maxWind == null) return Double.POSITIVE_INFINITY;
+        return maxWind;
+    }
+    public boolean isWindDefined() {
+        return minWind != null || maxWind != null;
+    }
+
+    public double getMinRainfall() {
+        if (minRainfall == null) return Double.NEGATIVE_INFINITY;
+        return minRainfall;
+    }
+
+    public double getMaxRainfall() {
+        if (maxRainfall == null) return Double.POSITIVE_INFINITY;
+        return maxRainfall;
+    }
+    public boolean isRainFallDefined(){
+        return minRainfall != null || maxRainfall != null;
     }
 
     @Override

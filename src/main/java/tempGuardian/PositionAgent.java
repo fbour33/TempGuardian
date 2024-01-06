@@ -11,35 +11,42 @@ import java.io.IOException;
 public class PositionAgent implements IPositionAgent{
 
     private final OkHttpClient client;
-    private final String POSITION_URL = "https://geocode.maps.co/search?q=";
 
     public PositionAgent(){
         this.client = new OkHttpClient();
     }
 
-    // One possible issue : An API key is needed for some address,
-    // method might return null because of that
+    // Be careful need to do at most 1 request per second
     @Override
     public Position getPositionFromAddress(IAddress address) {
         Request request = new Request.Builder()
-                .url(POSITION_URL + address.getLocation())
+                .url("https://geocode.maps.co/search?q=" + address.getLocation() + "&api_key=65996fc55b7b2131474693rlk09fe50")
                 .build();
         try{
             Response response = client.newCall(request).execute();
             if(response.body() != null) {
-                JSONArray jsonArray = new JSONArray(response.body().string());
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                return new Position(jsonObject.getDouble("lat"), jsonObject.getDouble("lon"));
+                String responseBody = response.body().string();
+                JSONArray jsonArray = new JSONArray(responseBody);
+                if (jsonArray.isEmpty()){
+                    System.out.println("No Position found for " + address.getLocation() + ": use default position");
+                    return new Position(44.806433, -0.605182);
+                }else{
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    double lat = jsonObject.getDouble("lat");
+                    double lon = jsonObject.getDouble("lon");
+                    System.out.println("New Position found for " + address.getLocation() + ": lat: " + lat + ", lon: " + lon);
+                    return new Position(lat, lon);
+                }
             }
-        }catch (IOException e){
+        }catch (IOException e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
 //Used for testing class
-//    public static void main(String[] args) {
-//        IAddress address = new Address("17 rue Saint Martin, 28100, Dreux");
-//        IPositionAgent positionAgent = new PositionAgent();
-//        System.out.println(positionAgent.getPositionFromAddress(address));
-//    }
+    public static void main(String[] args) {
+        IAddress address = new Address("17 rue Saint Martin, 28100, Dreux");
+        IPositionAgent positionAgent = new PositionAgent();
+        System.out.println(positionAgent.getPositionFromAddress(address));
+    }
 }
