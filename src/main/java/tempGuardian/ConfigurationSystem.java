@@ -10,15 +10,11 @@ public class ConfigurationSystem implements IConfigurationSystem {
 
     HashMap<String, IUser> userSet = new HashMap<>();
 
-    public ConfigurationSystem(String filePath) {
-        try {
-            List<InputAddress> beans = new CsvToBeanBuilder<InputAddress>(new FileReader(filePath))
-                    .withType(InputAddress.class)
-                    .build().parse();
-            beans.forEach(this::addAddress);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+    public ConfigurationSystem(String filePath) throws FileNotFoundException {
+        List<InputAddress> beans = new CsvToBeanBuilder<InputAddress>(new FileReader(filePath))
+                .withType(InputAddress.class)
+                .build().parse();
+        beans.forEach(this::addAddress);
     }
 
     private void addAddress(InputAddress inputAddress) {
@@ -56,8 +52,8 @@ public class ConfigurationSystem implements IConfigurationSystem {
         INotificationSystem notificationSystem = new NotificationSystem(outputPath);
         for (IUser user : getAllUsers()) {
             for (IAddress address : getUserAddresses(user)) {
+                Position position = positionAgent.getPositionFromAddress(address);
                 for (IWeatherThreshold threshold : address.getThresholds()) {
-                    Position position = positionAgent.getPositionFromAddress(address);
                     IWeatherData weatherData = weatherAgent.getWeatherData(position);
                     if (threshold.isThresholdExceeded(weatherData)) {
                         notificationSystem.sendAlert(
@@ -67,8 +63,8 @@ public class ConfigurationSystem implements IConfigurationSystem {
                                 threshold.generateThresholdDataMessage(weatherData)
                         );
                     }
-                    Thread.sleep(1000);
                 }
+                Thread.sleep(1000);
             }
         }
     }
@@ -76,16 +72,20 @@ public class ConfigurationSystem implements IConfigurationSystem {
 
     // Use to test code
     public static void main(String[] args) throws InterruptedException {
-        IConfigurationSystem configurationSystem = new ConfigurationSystem("data/input.csv");
-        ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
-        int count = 1;
-        for (IUser user : userArrayList) {
-            System.out.println("[" + count + "]" + user);
-            count++;
-        }
+        try {
+            IConfigurationSystem configurationSystem = new ConfigurationSystem("data/empty_user.csv");
+            ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
+            int count = 1;
+            for (IUser user : userArrayList) {
+                System.out.println("[" + count + "]" + user);
+                count++;
+            }
 
-        IPositionAgent positionAgent = new PositionAgent();
-        IWeatherAgent weatherAgent = new WeatherAgent();
-        configurationSystem.executeSystem(positionAgent, weatherAgent, "data/test_main.csv");
+            IPositionAgent positionAgent = new PositionAgent();
+            IWeatherAgent weatherAgent = new WeatherAgent();
+            configurationSystem.executeSystem(positionAgent, weatherAgent, "data/test_main.csv");
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
