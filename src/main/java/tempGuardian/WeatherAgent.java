@@ -38,11 +38,4 @@ public class WeatherAgent implements IWeatherAgent {
         }
         return null;
     }
-// Used for testing class
-    public static void main(String[] args) {
-        IAddress address = new Address("17 rue Saint Martin, 28100, Dreux");
-        IPositionAgent positionAgent = new PositionAgent();
-        IWeatherAgent weatherAgent = new WeatherAgent();
-        System.out.println(weatherAgent.getWeatherData(positionAgent.getPositionFromAddress(address)));
-    }
 }

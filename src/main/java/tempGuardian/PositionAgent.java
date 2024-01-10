@@ -16,7 +16,7 @@ public class PositionAgent implements IPositionAgent{
         this.client = new OkHttpClient();
     }
 
-    // Be careful need to do at most 1 request per second
+    // /!\ Need to do at most 1 request per second /!\
     @Override
     public Position getPositionFromAddress(IAddress address) {
         Request request = new Request.Builder()
@@ -42,11 +42,5 @@ public class PositionAgent implements IPositionAgent{
             System.out.println(e.getMessage());
         }
         return null;
-    }
-//Used for testing class
-    public static void main(String[] args) {
-        IAddress address = new Address("17 rue Saint Martin, 28100, Dreux");
-        IPositionAgent positionAgent = new PositionAgent();
-        System.out.println(positionAgent.getPositionFromAddress(address));
     }
 }
