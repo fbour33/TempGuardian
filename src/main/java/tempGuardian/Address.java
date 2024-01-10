@@ -6,12 +6,11 @@ import java.util.Arrays;
 public class Address implements IAddress {
 
     private String location;
-    private ArrayList<IWeatherThreshold> thresholds;
+    private final ArrayList<IWeatherThreshold> thresholds = new ArrayList<>();
 
     public Address(String location, IWeatherThreshold... weatherThresholds){
         setLocation(location);
         if(weatherThresholds != null){
-            thresholds = new ArrayList<>();
             thresholds.addAll(Arrays.asList(weatherThresholds));
         }
     }
