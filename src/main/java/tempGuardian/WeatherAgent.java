@@ -20,22 +20,31 @@ public class WeatherAgent implements IWeatherAgent {
                 "&longitude=" + longitude + "&current=temperature_2m,rain,wind_speed_10m";
     }
     @Override
-    public IWeatherData getWeatherData(Position position) {
+    public IWeatherData getWeatherData(Position position) throws ApiCommunicationError {
         Request request = new Request.Builder()
                 .url(getFullUrl(position.getLatitude(), position.getLongitude()))
                 .build();
         try{
             Response response = client.newCall(request).execute();
             if(response.body() != null) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                JSONObject current = jsonObject.getJSONObject("current");
-                return new WeatherData(current.getDouble("temperature_2m"),
-                        current.getDouble("rain"),
-                        current.getDouble("wind_speed_10m"));
+                return deserializeData(response.body().string());
             }
         }catch (IOException e){
-            System.out.println(e.getMessage());
+            throw new ApiCommunicationError("Weather API", e.getMessage());
         }
         return null;
+    }
+
+    private IWeatherData deserializeData(String body) throws ApiCommunicationError {
+        try{
+            JSONObject jsonObject = new JSONObject(body);
+            JSONObject current = jsonObject.getJSONObject("current");
+            return new WeatherData(current.getDouble("temperature_2m"),
+                    current.getDouble("rain"),
+                    current.getDouble("wind_speed_10m"));
+        }catch (Exception e){
+            throw new ApiCommunicationError("Weather API", "deserialization error on: " + body);
+        }
+
     }
 }

@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WeatherDataTest {
 
-    double temp = 0;
-    double wind = 1;
-    double rain = 2;
+    final double temp = 0;
+    final double wind = 1;
+    final double rain = 2;
     @Test
     void get_temperature_correctly(){
         IWeatherData weatherData = new WeatherData(temp, rain, wind);

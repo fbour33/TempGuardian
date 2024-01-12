@@ -18,7 +18,7 @@ public class PositionAgent implements IPositionAgent{
 
     // /!\ Need to do at most 1 request per second /!\
     @Override
-    public Position getPositionFromAddress(IAddress address) {
+    public Position getPositionFromAddress(IAddress address) throws ApiCommunicationError {
         Request request = new Request.Builder()
                 .url("https://geocode.maps.co/search?q=" + address.getLocation() + "&api_key=65996fc55b7b2131474693rlk09fe50")
                 .build();
@@ -26,7 +26,7 @@ public class PositionAgent implements IPositionAgent{
             Response response = client.newCall(request).execute();
             if(response.body() != null) {
                 String responseBody = response.body().string();
-                JSONArray jsonArray = new JSONArray(responseBody);
+                JSONArray jsonArray = deserializeData(responseBody);
                 if (jsonArray.isEmpty()){
                     System.out.println("No Position found for " + address.getLocation() + ": use default position");
                     return new Position(44.806433, -0.605182);
@@ -39,8 +39,16 @@ public class PositionAgent implements IPositionAgent{
                 }
             }
         }catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new ApiCommunicationError("Position API", e.getMessage());
         }
         return null;
+    }
+
+    private JSONArray deserializeData(String body) throws ApiCommunicationError {
+        try{
+            return new JSONArray(body);
+        }catch (Exception e){
+            throw new ApiCommunicationError("Position API", "Deserialization error on: " + body);
+        }
     }
 }

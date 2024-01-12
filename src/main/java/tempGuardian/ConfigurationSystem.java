@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ConfigurationSystem implements IConfigurationSystem {
 
-    HashMap<String, IUser> userSet = new HashMap<>();
+    final HashMap<String, IUser> userSet = new HashMap<>();
 
     public ConfigurationSystem(String filePath) throws FileNotFoundException {
         List<InputAddress> beans = new CsvToBeanBuilder<InputAddress>(new FileReader(filePath))

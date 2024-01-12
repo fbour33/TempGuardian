@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class User implements IUser {
     final String username;
-    boolean areNotificationsEnabled = true;
-    HashMap<IAddress, Boolean> addressSet;
+    boolean areNotificationsDisabled = false;
+    final HashMap<IAddress, Boolean> addressSet;
 
     public User(String username){
         this.username = username;
@@ -15,7 +15,7 @@ public class User implements IUser {
 
     @Override
     public void addAddress(IAddress address){
-        addressSet.put(address, true);
+        addressSet.put(address, false);
     }
 
     @Override
@@ -25,25 +25,25 @@ public class User implements IUser {
 
     @Override
     public void disableNotifications() {
-        areNotificationsEnabled = false;
+        areNotificationsDisabled = true;
     }
 
     @Override
     public void disableNotifications(IAddress... addresses) {
         for (IAddress toDisableAddress : addresses) {
-            addressSet.replace(toDisableAddress, false);
+            addressSet.replace(toDisableAddress, true);
         }
     }
 
     @Override
     public boolean areNotificationsDisabled() {
-        return areNotificationsEnabled;
+        return areNotificationsDisabled;
     }
 
     @Override
     public boolean areNotificationsDisabled(IAddress address) {
         Boolean addressNotifications = addressSet.get(address);
-        if (addressNotifications != null) return addressNotifications;
+        if (addressNotifications != null) return addressNotifications || areNotificationsDisabled;
         return false;
     }
 
@@ -56,7 +56,7 @@ public class User implements IUser {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", areNotificationsEnabled=" + areNotificationsEnabled +
+                ", areNotificationsDisabled=" + areNotificationsDisabled +
                 ", addressSet=" + addressSet +
                 '}';
     }
