@@ -25,8 +25,8 @@ public class TempGuardian {
                     if (threshold.isThresholdExceeded(weatherData) && !user.areNotificationsDisabled(address)) {
                         notificationSystem.sendAlert(
                                 user.getName(),
-                                threshold.generateThresholdMessage(weatherData),
                                 address.getLocation(),
+                                threshold.generateThresholdMessage(weatherData),
                                 threshold.generateThresholdDataMessage(weatherData)
                         );
                     }

@@ -19,7 +19,7 @@ public class NotificationSystem implements INotificationSystem {
     }
 
     @Override
-    public void sendAlert(String username, String message, String address, String data) {
+    public void sendAlert(String username, String address, String message, String data) {
         String[] writeData = {username, address, message, data};
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath, true))){
