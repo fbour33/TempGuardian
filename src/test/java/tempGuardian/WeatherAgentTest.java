@@ -1,3 +1,5 @@
+package tempGuardian;
+
 import org.junit.jupiter.api.Test;
 import tempGuardian.ApiCommunicationError;
 import tempGuardian.IWeatherAgent;
