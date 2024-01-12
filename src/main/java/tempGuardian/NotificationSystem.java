@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class NotificationSystem implements INotificationSystem {
 
-    String outputFilePath;
+    final String outputFilePath;
     public NotificationSystem(String outputFilePath) {
         this.outputFilePath = outputFilePath;
         try (CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath))){

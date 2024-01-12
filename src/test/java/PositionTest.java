@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PositionTest {
 
     Position position;
-    double latitude = 1;
-    double longitude = 2;
+    final double latitude = 1;
+    final double longitude = 2;
 
     @BeforeEach
     void setup(){

@@ -9,20 +9,20 @@ public class TempGuardian {
     private final IPositionAgent positionAgent;
     private final INotificationSystem notificationSystem;
 
-    public TempGuardian(IConfigurationSystem configurationSystem, IWeatherAgent weatherAgent, IPositionAgent positionAgent, INotificationSystem notificationSystem){
+    public TempGuardian(IConfigurationSystem configurationSystem, IWeatherAgent weatherAgent, IPositionAgent positionAgent, INotificationSystem notificationSystem) {
         this.configurationSystem = configurationSystem;
         this.weatherAgent = weatherAgent;
         this.positionAgent = positionAgent;
         this.notificationSystem = notificationSystem;
     }
 
-    public void executeSystem() throws InterruptedException {
+    public void executeSystem() throws InterruptedException, ApiCommunicationError {
         for (IUser user : configurationSystem.getAllUsers()) {
             for (IAddress address : configurationSystem.getUserAddresses(user)) {
                 Position position = positionAgent.getPositionFromAddress(address);
                 for (IWeatherThreshold threshold : address.getThresholds()) {
                     IWeatherData weatherData = weatherAgent.getWeatherData(position);
-                    if (threshold.isThresholdExceeded(weatherData)) {
+                    if (threshold.isThresholdExceeded(weatherData) && !user.areNotificationsDisabled(address)) {
                         notificationSystem.sendAlert(
                                 user.getName(),
                                 threshold.generateThresholdMessage(weatherData),
@@ -38,22 +38,18 @@ public class TempGuardian {
 
 
     // Use to test code
-    public static void main(String[] args) throws InterruptedException {
-        try {
-            IConfigurationSystem configurationSystem = new ConfigurationSystem("data/input.csv");
-            IPositionAgent positionAgent = new PositionAgent();
-            IWeatherAgent weatherAgent = new WeatherAgent();
-            INotificationSystem notificationSystem = new NotificationSystem("data/test_main.csv");
-            TempGuardian tempGuardian = new TempGuardian(configurationSystem, weatherAgent, positionAgent, notificationSystem);
-            ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
-            int count = 1;
-            for (IUser user : userArrayList) {
-                System.out.println("[" + count + "]" + user);
-                count++;
-            }
-            tempGuardian.executeSystem();
-        }catch (FileNotFoundException e){
-            System.out.println(e.getMessage());
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException, ApiCommunicationError {
+        IConfigurationSystem configurationSystem = new ConfigurationSystem("data/input.csv");
+        IPositionAgent positionAgent = new PositionAgent();
+        IWeatherAgent weatherAgent = new WeatherAgent();
+        INotificationSystem notificationSystem = new NotificationSystem("data/test_main.csv");
+        TempGuardian tempGuardian = new TempGuardian(configurationSystem, weatherAgent, positionAgent, notificationSystem);
+        ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
+        int count = 1;
+        for (IUser user : userArrayList) {
+            System.out.println("[" + count + "]" + user);
+            count++;
         }
+        tempGuardian.executeSystem();
     }
 }
