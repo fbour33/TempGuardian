@@ -10,10 +10,7 @@ import java.util.ArrayList;
 
 public class NotificationSystemTest {
 
-
     private static ArrayList<String[]> alerts = new ArrayList<>(2);
-    static String alertStringVelocityDream;
-    static String alertStringQuantumExplorer;
 
     @BeforeAll
     public static void setup(){
@@ -61,7 +58,6 @@ public class NotificationSystemTest {
         NotificationSystem notificationSystem = new NotificationSystem(filePath);
         String[] alert = alerts.get(0);
         notificationSystem.sendAlert(alert[0], alert[1], alert[2], alert[3]);
-
         ArrayList<String> stringAlerts = getAlertsInFile(filePath);
         assertTrue(stringAlerts.contains(formatAlert(alert)));
         File file = new File(filePath);

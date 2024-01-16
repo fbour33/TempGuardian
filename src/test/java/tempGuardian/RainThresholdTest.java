@@ -53,6 +53,20 @@ public class RainThresholdTest {
     }
 
     @Test
+    void isThreshold_correctly_not_exceeded_at_min_bound(){
+        IWeatherThreshold weatherThreshold = new RainThreshold(0, 10);
+        when(weatherData.getRain()).thenReturn(0d);
+        assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
+    }
+
+    @Test
+    void isThreshold_correctly_not_exceeded_at_max_bound(){
+        IWeatherThreshold weatherThreshold = new RainThreshold(0, 10);
+        when(weatherData.getRain()).thenReturn(0d);
+        assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
+    }
+
+    @Test
     void message_correctly_generated(){
         IWeatherThreshold weatherThreshold = new RainThreshold(0, 10);
         when(weatherData.getRain()).thenReturn(11d);
