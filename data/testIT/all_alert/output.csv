@@ -1,4 +1,1 @@
 "username","address","message","data"
-"VelocityDreamer","[Temperature] Maximum threshold exceeded","40 rue Pierre De Coubertin 31400 Toulouse","13.3 > -1000.0°C"
-"VelocityDreamer","[Wind] Minimum threshold exceeded","40 rue Pierre De Coubertin 31400 Toulouse","12.2 < 1000.0km/h"
-"VelocityDreamer","[Rain fall] Minimum threshold exceeded","40 rue Pierre De Coubertin 31400 Toulouse","0.0 < 1000.0mm"

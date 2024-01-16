@@ -18,7 +18,8 @@ public class PositionAgent implements IPositionAgent{
 
     // /!\ Need to do at most 1 request per second /!\
     @Override
-    public Position getPositionFromAddress(IAddress address) throws ApiCommunicationError {
+    public Position getPositionFromAddress(IAddress address) throws ApiCommunicationError, InterruptedException {
+        Thread.sleep(1000);
         Request request = new Request.Builder()
                 .url("https://geocode.maps.co/search?q=" + address.getLocation() + "&api_key=65996fc55b7b2131474693rlk09fe50")
                 .build();

@@ -2,6 +2,6 @@ package tempGuardian;
 
 public interface IPositionAgent {
 
-    Position getPositionFromAddress(IAddress address) throws ApiCommunicationError;
+    Position getPositionFromAddress(IAddress address) throws ApiCommunicationError, InterruptedException;
 
 }

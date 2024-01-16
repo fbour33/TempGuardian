@@ -15,7 +15,9 @@ public class TempGuardian {
 
     public void executeSystem() throws InterruptedException, ApiCommunicationError {
         for (IUser user : configurationSystem.getAllUsers()) {
+            if (user.areNotificationsDisabled()) return;
             for (IAddress address : configurationSystem.getUserAddresses(user)) {
+                if (user.areNotificationsDisabled(address)) return;
                 Position position = positionAgent.getPositionFromAddress(address);
                 for (IWeatherThreshold threshold : address.getThresholds()) {
                     IWeatherData weatherData = weatherAgent.getWeatherData(position);
@@ -28,7 +30,6 @@ public class TempGuardian {
                         );
                     }
                 }
-                Thread.sleep(1000);
             }
         }
     }

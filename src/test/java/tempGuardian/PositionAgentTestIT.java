@@ -2,21 +2,17 @@ package tempGuardian;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PositionAgentTestIT {
 
     final String addressLocation = "40 rue Pierre De Coubertin 31400 Toulouse";
 
     @Test
-    void too_fast_calls_throw_error() {
-        IAddress address = new Address(addressLocation);
+    void get_position_from_address_correctly() throws ApiCommunicationError, InterruptedException {
         IPositionAgent positionAgent = new PositionAgent();
-        assertThrows(ApiCommunicationError.class, () -> {
-            positionAgent.getPositionFromAddress(address);
-            positionAgent.getPositionFromAddress(address);
-            Thread.sleep(1000);
-        });
+        IAddress address = new Address(addressLocation);
+        Position position = positionAgent.getPositionFromAddress(address);
+        assertNotNull(position);
     }
-
 }

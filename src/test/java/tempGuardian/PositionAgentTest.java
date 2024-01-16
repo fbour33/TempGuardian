@@ -18,13 +18,11 @@ public class PositionAgentTest {
     }
 
     @Test
-    void too_fast_calls_throw_error() {
-        when(address.getLocation()).thenReturn(addressLocation);
+    void get_position_from_address_correctly() throws ApiCommunicationError, InterruptedException {
         IPositionAgent positionAgent = new PositionAgent();
-        assertThrows(ApiCommunicationError.class, () -> {
-            positionAgent.getPositionFromAddress(address);
-            positionAgent.getPositionFromAddress(address);
-        });
+        when(address.getLocation()).thenReturn(addressLocation);
+        Position position = positionAgent.getPositionFromAddress(address);
+        assertNotNull(position);
     }
 
 }
