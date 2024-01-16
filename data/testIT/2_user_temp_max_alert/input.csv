@@ -1,0 +1,3 @@
+username,address,minTemp(°C),maxTemp(°C),minWind(km/h),maxWind(km/h),minRainfall(mm/h),maxRainfall(mm/h)
+VelocityDreamer,40 rue Pierre De Coubertin 31400 Toulouse,-1000, -1000,,,,
+BinaryBlaze,90 place Stanislas 54100 Nancy, -1000, -1000,,,,
