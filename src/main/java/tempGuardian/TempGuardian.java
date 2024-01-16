@@ -1,8 +1,5 @@
 package tempGuardian;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 public class TempGuardian {
     private final IConfigurationSystem configurationSystem;
     private final IWeatherAgent weatherAgent;
@@ -25,8 +22,8 @@ public class TempGuardian {
                     if (threshold.isThresholdExceeded(weatherData) && !user.areNotificationsDisabled(address)) {
                         notificationSystem.sendAlert(
                                 user.getName(),
-                                address.getLocation(),
                                 threshold.generateThresholdMessage(weatherData),
+                                address.getLocation(),
                                 threshold.generateThresholdDataMessage(weatherData)
                         );
                     }
@@ -34,22 +31,5 @@ public class TempGuardian {
                 Thread.sleep(1000);
             }
         }
-    }
-
-
-    // Use to test code
-    public static void main(String[] args) throws InterruptedException, FileNotFoundException, ApiCommunicationError {
-        IConfigurationSystem configurationSystem = new ConfigurationSystem("data/input.csv");
-        IPositionAgent positionAgent = new PositionAgent();
-        IWeatherAgent weatherAgent = new WeatherAgent();
-        INotificationSystem notificationSystem = new NotificationSystem("data/test_main.csv");
-        TempGuardian tempGuardian = new TempGuardian(configurationSystem, weatherAgent, positionAgent, notificationSystem);
-        ArrayList<IUser> userArrayList = configurationSystem.getAllUsers();
-        int count = 1;
-        for (IUser user : userArrayList) {
-            System.out.println("[" + count + "]" + user);
-            count++;
-        }
-        tempGuardian.executeSystem();
     }
 }
