@@ -2,7 +2,6 @@ package tempGuardian;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tempGuardian.*;
 
 import java.util.ArrayList;
 
@@ -55,10 +54,13 @@ public class TempGuardianTest {
 
         thresholdExceeded = mock(IWeatherThreshold.class);
         when(thresholdExceeded.isThresholdExceeded(any(IWeatherData.class))).thenReturn(true);
+        when(thresholdExceeded.generateThresholdMessage(any(IWeatherData.class))).thenReturn("");
+        when(thresholdExceeded.generateThresholdDataMessage(any(IWeatherData.class))).thenReturn("");
 
         thresholdNotExceeded = mock(IWeatherThreshold.class);
-        when(thresholdExceeded.isThresholdExceeded(any(IWeatherData.class))).thenReturn(false);
-
+        when(thresholdNotExceeded.isThresholdExceeded(any(IWeatherData.class))).thenReturn(false);
+        when(thresholdNotExceeded.generateThresholdMessage(any(IWeatherData.class))).thenReturn("");
+        when(thresholdNotExceeded.generateThresholdDataMessage(any(IWeatherData.class))).thenReturn("");
 
         tempGuardian = new TempGuardian(configurationSystem, weatherAgent, positionAgent, notificationSystem);
     }
@@ -68,33 +70,59 @@ public class TempGuardianTest {
         userList.add(user1);
         addressesList.add(address1);
         address1Thresholds.add(thresholdExceeded);
-        //tempGuardian.executeSystem();
+        tempGuardian.executeSystem();
 
-        //verify(notificationSystem, times(1)).sendAlert(anyString(), anyString(), anyString(), anyString());
+        verify(notificationSystem, times(1)).sendAlert(anyString(), anyString(), anyString(), anyString());
+        verify(notificationSystem, times(1)).sendAlert(eq(username), anyString(), eq(location), anyString());
     }
 
     @Test
-    void dont_send_alert_on_threshold_not_exceeded(){
+    void dont_send_alert_on_threshold_not_exceeded() throws ApiCommunicationError, InterruptedException {
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdNotExceeded);
+        tempGuardian.executeSystem();
 
+        verify(notificationSystem, times(0)).sendAlert(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
-    void dont_send_alert_when_all_notifications_disabled(){
-
+    void dont_send_alert_when_all_notifications_disabled() throws ApiCommunicationError, InterruptedException {
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdNotExceeded);
+        tempGuardian.executeSystem();
+        user1.disableNotifications();
+        verify(notificationSystem, times(0)).sendAlert(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
-    void dont_send_alert_when_specific_notifications_disabled(){
-
+    void dont_send_alert_when_specific_notifications_disabled() throws ApiCommunicationError, InterruptedException {
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdNotExceeded);
+        tempGuardian.executeSystem();
+        user1.disableNotifications(address1);
+        verify(notificationSystem, times(0)).sendAlert(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
-    void send_alert_on_every_user_threshold(){
-
+    void send_alert_on_every_user_threshold() throws ApiCommunicationError, InterruptedException {
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdExceeded);
+        address1Thresholds.add(thresholdExceeded);
+        tempGuardian.executeSystem();
+        verify(notificationSystem, times(2)).sendAlert(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
-    void send_alert_on_every_user_address(){
-
+    void send_alert_on_every_user_address() throws ApiCommunicationError, InterruptedException {
+        userList.add(user1);
+        addressesList.add(address1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdExceeded);
+        tempGuardian.executeSystem();
+        verify(notificationSystem, times(2)).sendAlert(anyString(), anyString(), anyString(), anyString());
     }
 }
