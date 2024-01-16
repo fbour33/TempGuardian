@@ -53,23 +53,112 @@ public class WindThresholdTest {
     }
 
     @Test
-    void message_correctly_generated(){
+    void isThreshold_correctly_not_exceeded_at_min_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(0d);
+        assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
+    }
+
+    @Test
+    void isThreshold_correctly_not_exceeded_at_max_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(10d);
+        assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
+    }
+
+    @Test
+    void message_correctly_generated_max_exceeded(){
         IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
         when(weatherData.getWind()).thenReturn(11d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
         assertTrue(message.contains("Wind"));
         assertTrue(message.contains("Maximum"));
         assertTrue(message.contains("threshold exceeded"));
+    }
+
+    @Test
+    void message_correctly_generated_min_exceeded(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
         when(weatherData.getWind()).thenReturn(-1d);
-        message = weatherThreshold.generateThresholdMessage(weatherData);
+        String message = weatherThreshold.generateThresholdMessage(weatherData);
         assertTrue(message.contains("Wind"));
         assertTrue(message.contains("Minimum"));
         assertTrue(message.contains("threshold exceeded"));
+    }
+
+
+    @Test
+    void message_correctly_generated_no_exceeded(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
         when(weatherData.getWind()).thenReturn(5d);
-        message = weatherThreshold.generateThresholdMessage(weatherData);
+        String message = weatherThreshold.generateThresholdMessage(weatherData);
         assertTrue(message.contains("Wind"));
         assertTrue(message.contains("No"));
         assertTrue(message.contains("threshold exceeded"));
+    }
+
+    @Test
+    void message_correctly_generated_no_exceed_for_min_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(0d);
+        String message = weatherThreshold.generateThresholdMessage(weatherData);
+        assertTrue(message.contains("Wind"));
+        assertTrue(message.contains("No"));
+        assertTrue(message.contains("threshold exceeded"));
+    }
+
+    @Test
+    void message_correctly_generated_no_exceed_for_max_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(10d);
+        String message = weatherThreshold.generateThresholdMessage(weatherData);
+        assertTrue(message.contains("Wind"));
+        assertTrue(message.contains("No"));
+        assertTrue(message.contains("threshold exceeded"));
+    }
+
+    @Test
+    void data_message_correctly_generated_when_no_exceed(){
+        IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(0d);
+        String message = weatherThreshold.generateThresholdDataMessage(weatherData);
+        assertTrue(message.contains("ERROR"));
+    }
+
+    @Test
+    void data_message_correctly_generated_when_max_exceeded(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(11d);
+        String message = weatherThreshold.generateThresholdDataMessage(weatherData);
+        assertTrue(message.contains("" + 10));
+        assertTrue(message.contains(">"));
+        assertTrue(message.contains("" + 11));
+    }
+
+    @Test
+    void data_message_correctly_generated_when_min_exceeded(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(-1d);
+        String message = weatherThreshold.generateThresholdDataMessage(weatherData);
+        assertTrue(message.contains("" + -1));
+        assertTrue(message.contains("<"));
+        assertTrue(message.contains("" + 0));
+    }
+
+    @Test
+    void data_message_correctly_generated_at_max_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(10d);
+        String message = weatherThreshold.generateThresholdDataMessage(weatherData);
+        assertTrue(message.contains("ERROR"));
+    }
+
+    @Test
+    void data_message_correctly_generated_at_min_bound(){
+        IWeatherThreshold weatherThreshold = new WindThreshold(0, 10);
+        when(weatherData.getWind()).thenReturn(0d);
+        String message = weatherThreshold.generateThresholdDataMessage(weatherData);
+        assertTrue(message.contains("ERROR"));
     }
 
     @Test

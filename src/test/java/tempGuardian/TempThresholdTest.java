@@ -53,21 +53,21 @@ public class TempThresholdTest {
     }
 
     @Test
-    void isThreshold_correctly_min_not_exceeded_at_bounds(){
+    void isThreshold_correctly_not_exceeded_at_min_bound(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(0d);
         assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
     }
 
     @Test
-    void isThreshold_correctly_max_not_exceeded_at_bounds(){
+    void isThreshold_correctly_not_exceeded_at_max_bound(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(10d);
         assertFalse(weatherThreshold.isThresholdExceeded(weatherData));
     }
 
     @Test
-    void message_exceeded_min_correctly_generated(){
+    void message_correctly_generated_max_exceeded(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(11d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
@@ -77,7 +77,7 @@ public class TempThresholdTest {
     }
 
     @Test
-    void message_exceeded_max_correctly_generated(){
+    void message_correctly_generated_min_exceeded(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(-1d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
@@ -87,7 +87,7 @@ public class TempThresholdTest {
     }
 
     @Test
-    void message_no_exceeded_correctly_generated(){
+    void message_correctly_generated_no_exceeded(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(5d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
@@ -97,7 +97,7 @@ public class TempThresholdTest {
     }
 
     @Test
-    void message_no_exceed_correctly_generated_for_min_bound(){
+    void message_correctly_generated_no_exceed_for_min_bound(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(0d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
@@ -107,7 +107,7 @@ public class TempThresholdTest {
     }
 
     @Test
-    void message_no_exceed_correctly_generated_for_max_bound(){
+    void message_correctly_generated_no_exceed_for_max_bound(){
         IWeatherThreshold weatherThreshold = new TempThreshold(0, 10);
         when(weatherData.getTemperature()).thenReturn(10d);
         String message = weatherThreshold.generateThresholdMessage(weatherData);
