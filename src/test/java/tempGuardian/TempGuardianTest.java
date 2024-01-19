@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class TempGuardianTest {
@@ -124,5 +125,23 @@ public class TempGuardianTest {
         address1Thresholds.add(thresholdExceeded);
         tempGuardian.executeSystem();
         verify(notificationSystem, times(2)).sendAlert(anyString(), anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void throw_ApiNotificationSystem_on_position_agent_error() throws ApiCommunicationError, InterruptedException {
+        when(positionAgent.getPositionFromAddress(any(IAddress.class))).thenThrow(ApiCommunicationError.class);
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdExceeded);
+        assertThrows(ApiCommunicationError.class, () -> tempGuardian.executeSystem());
+    }
+
+    @Test
+    void throw_ApiNotificationSystem_on_weather_agent_error() throws ApiCommunicationError {
+        when(weatherAgent.getWeatherData(any(Position.class))).thenThrow(ApiCommunicationError.class);
+        userList.add(user1);
+        addressesList.add(address1);
+        address1Thresholds.add(thresholdExceeded);
+        assertThrows(ApiCommunicationError.class, () -> tempGuardian.executeSystem());
     }
 }

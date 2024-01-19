@@ -115,8 +115,10 @@ public class TempGuardianTestIT {
 
     @Test
     void dont_send_alert_when_user_notifications_disabled() throws ApiCommunicationError, InterruptedException, IOException {
-        ArrayList<String> alerts = configTest("all_alert", "disable_user");
-        assertEquals(0, alerts.size());
+        ArrayList<String> all_alerts = configTest("all_alert", "disable_user");
+        ArrayList<String> no_alerts = configTest("no_alert", "disable_user");
+        assertEquals(0, all_alerts.size());
+        assertEquals(0, no_alerts.size());
     }
 
     @Test

@@ -23,7 +23,7 @@ public class TempGuardian {
                 Position position = positionAgent.getPositionFromAddress(address);
                 for (IWeatherThreshold threshold : address.getThresholds()) {
                     IWeatherData weatherData = weatherAgent.getWeatherData(position);
-                    if (threshold.isThresholdExceeded(weatherData) && !user.areNotificationsDisabled(address)) {
+                    if (threshold.isThresholdExceeded(weatherData)) {
                         notificationSystem.sendAlert(
                                 user.getName(),
                                 threshold.generateThresholdMessage(weatherData),
@@ -35,7 +35,6 @@ public class TempGuardian {
             }
         }
     }
-
     public static void main(String[] args) throws FileNotFoundException, ApiCommunicationError, InterruptedException {
         TempGuardian tempGuardian = new TempGuardian(
                 new ConfigurationSystem("data/input.csv"),
