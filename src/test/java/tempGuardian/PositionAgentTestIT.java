@@ -1,28 +1,18 @@
 package tempGuardian;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class PositionAgentTest {
-
-    IAddress address;
+public class PositionAgentTestIT {
 
     final String addressLocation = "40 rue Pierre De Coubertin 31400 Toulouse";
-
-    @BeforeEach
-    void setup(){
-        address = mock(IAddress.class);
-    }
 
     @Test
     void get_position_from_address_correctly() throws ApiCommunicationError, InterruptedException {
         IPositionAgent positionAgent = new PositionAgent();
-        when(address.getLocation()).thenReturn(addressLocation);
+        IAddress address = new Address(addressLocation);
         Position position = positionAgent.getPositionFromAddress(address);
         assertNotNull(position);
     }
-
 }

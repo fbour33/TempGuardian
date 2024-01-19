@@ -29,7 +29,7 @@ public class TempGuardianTest {
     ArrayList<IWeatherThreshold> address1Thresholds = new ArrayList<>();
 
     @BeforeEach
-    void setup() throws ApiCommunicationError {
+    void setup() throws ApiCommunicationError, InterruptedException {
         configurationSystem = mock(IConfigurationSystem.class);
         when(configurationSystem.getAllUsers()).thenReturn(userList);
         when(configurationSystem.getUserAddresses(any(IUser.class))).thenReturn(addressesList);
