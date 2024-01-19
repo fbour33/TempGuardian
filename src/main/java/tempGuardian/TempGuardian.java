@@ -1,5 +1,7 @@
 package tempGuardian;
 
+import java.io.FileNotFoundException;
+
 public class TempGuardian {
     private final IConfigurationSystem configurationSystem;
     private final IWeatherAgent weatherAgent;
@@ -32,5 +34,14 @@ public class TempGuardian {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, ApiCommunicationError, InterruptedException {
+        TempGuardian tempGuardian = new TempGuardian(
+                new ConfigurationSystem("data/input.csv"),
+                new WeatherAgent(),
+                new PositionAgent(),
+                new NotificationSystem("data/output.csv"));
+        tempGuardian.executeSystem();
     }
 }
