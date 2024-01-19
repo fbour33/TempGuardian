@@ -71,17 +71,4 @@ public class InputAddress {
         return minRainfall != null || maxRainfall != null;
     }
 
-    @Override
-    public String toString() {
-        return "InputAddress{" +
-                "username='" + username + '\'' +
-                ", address='" + address + '\'' +
-                ", minTemp=" + minTemp +
-                ", maxTemp=" + maxTemp +
-                ", minWind=" + minWind +
-                ", maxWind=" + maxWind +
-                ", minRainfall=" + minRainfall +
-                ", maxRainfall=" + maxRainfall +
-                '}';
-    }
 }

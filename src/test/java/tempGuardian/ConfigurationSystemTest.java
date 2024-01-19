@@ -112,8 +112,50 @@ public class ConfigurationSystemTest {
         assertEquals(thresholds.get(0).getMaxThreshold(), 25);
         assertEquals(thresholds.get(1).getMinThreshold(), 1);
         assertEquals(thresholds.get(1).getMaxThreshold(), 6);
+
+    }
+
+    @Test
+    void adding_one_user_with_only_min_thresholds() throws FileNotFoundException {
+        ConfigurationSystem configurationSystem = new ConfigurationSystem("data/test/one_user_with_only_min_thresholds.csv");
+        ArrayList<IUser> userList = configurationSystem.getAllUsers();
+        assertEquals(userList.size(), 1);
+
+        IUser user = userList.get(0);
+        assertEquals(user.getName(), "StellarJourney92");
+        assertEquals(user.getAddresses().size(), 1);
+        assertTrue(isInAddressList(user.getAddresses(), "61 Chemin Challet 59800 Lille"));
+        ArrayList<IWeatherThreshold> thresholds = getThresholdsByLocation(user.getAddresses(), "61 Chemin Challet 59800 Lille");
+        assertEquals(thresholds.get(0).getMinThreshold(), -1);
+        assertEquals(thresholds.get(0).getMaxThreshold(), Double.POSITIVE_INFINITY);
+        assertEquals(thresholds.get(1).getMinThreshold(), -2);
+        assertEquals(thresholds.get(1).getMaxThreshold(), Double.POSITIVE_INFINITY);
+        assertEquals(thresholds.get(2).getMinThreshold(), -3);
+        assertEquals(thresholds.get(2).getMaxThreshold(), Double.POSITIVE_INFINITY);
     }
 
 
+
+
+
+
+    @Test
+    void adding_one_user_with_only_max_thresholds() throws FileNotFoundException {
+        ConfigurationSystem configurationSystem = new ConfigurationSystem("data/test/one_user_with_only_max_thresholds.csv");
+        ArrayList<IUser> userList = configurationSystem.getAllUsers();
+        assertEquals(userList.size(), 1);
+
+        IUser user = userList.get(0);
+        assertEquals(user.getName(), "StellarJourney92");
+        assertEquals(user.getAddresses().size(), 1);
+        assertTrue(isInAddressList(user.getAddresses(), "61 Chemin Challet 59800 Lille"));
+        ArrayList<IWeatherThreshold> thresholds = getThresholdsByLocation(user.getAddresses(), "61 Chemin Challet 59800 Lille");
+        assertEquals(thresholds.get(0).getMinThreshold(), Double.NEGATIVE_INFINITY);
+        assertEquals(thresholds.get(0).getMaxThreshold(), 1);
+        assertEquals(thresholds.get(1).getMinThreshold(), Double.NEGATIVE_INFINITY);
+        assertEquals(thresholds.get(1).getMaxThreshold(), 2);
+        assertEquals(thresholds.get(2).getMinThreshold(), Double.NEGATIVE_INFINITY);
+        assertEquals(thresholds.get(2).getMaxThreshold(), 3);
+    }
 
 }
